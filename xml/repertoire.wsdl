@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions name="Repertoire"
+	targetNamespace="urn:Repertoire"
+	xmlns:typens="urn:Repertoire"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://schemas.xmlsoap.org/wsdl/">
+
+	<!--type-->
+	<xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Repertoire/">
+
+	</xsd:schema>
+	<!--Messages-->
+	<message name='createRequest'>
+		<wsdl:part name="noms" type="xsd:string" />
+		<wsdl:part name="prenoms" type="xsd:string" />
+		<wsdl:part name="sexe" type="xsd:string" />
+		<wsdl:part name="email" type="xsd:string" />
+		<wsdl:part name="phone" type="xsd:string" />
+	</message>
+	<message name='getListRequest'>
+	</message>
+
+	<message name='createResponse'>
+		<part name='result' type='xsd:int' />
+	</message>
+
+	<message name='getListResponse'>
+		<part name='result' type='xsd:array' />
+	</message>
+
+	<!--Port-->
+
+	<portType name='RepertoirePortType'>
+		<operation name='create'>
+			<input message='typens:createRequest' />
+			<output message='typens:createResponse' />
+		</operation>
+
+		<operation name='getList'>
+			<input message='typens:getListRequest' />
+			<output message='typens:getListResponse' />
+		</operation>
+	</portType>
+
+	<binding name='RepertoireBinding' type='typens:RepertoirePortType'>
+		<soap:binding style='rpc' transport='http://schemas.xmlsoap.org/soap/http' />
+		<operation name='create'>
+			<soap:operation soapAction='urn:xmethods-delayed-quotes#create' />
+			<input name='createRequest'>
+				<soap:body use='encoded' namespace='urn:xmethods-delayed-calcul'
+					encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+			</input>
+			<output name='createResponse'>
+				<soap:body use='encoded' namespace='urn:xmethods-delayed-calcul'
+					encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+			</output>
+		</operation>
+
+		<operation name='getList'>
+			<soap:operation soapAction='urn:xmethods-delayed-quotes#getList' />
+			<input name='getListRequest'>
+				<soap:body use='encoded' namespace='urn:xmethods-delayed-calcul'
+					encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+			</input>
+			<output name='getListResponse'>
+				<soap:body use='encoded' namespace='urn:xmethods-delayed-calcul'
+					encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+			</output>
+		</operation>
+
+	</binding>
+
+	<service name='RepertoireService'>
+		<port name='RepertoirePortType' binding='RepertoireBinding'>
+			<soap:address location='http://localhost:56901/xml/Repertoire.php' />
+		</port>
+	</service>
+</definitions>
